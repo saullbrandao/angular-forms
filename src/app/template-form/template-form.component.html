@@ -1,43 +1,181 @@
 <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-  <div
-    class="form-floating mb-3"
-    [class.has-validation]="nome.invalid && nome.touched"
-  >
-    <input
-      type="text"
-      class="form-control"
-      id="nome"
-      name="nome"
-      placeholder="Nome"
-      [ngModel]="usuario.nome"
-      required
-      [class.is-invalid]="nome.invalid && nome.touched"
-      #nome="ngModel"
-    />
-    <label for="nome">Nome</label>
-    <div class="invalid-feedback" *ngIf="nome.invalid && nome.touched">
-      Nome é obrigatório
+  <div class="mb-3 row g-3">
+    <div class="form-floating" [class.has-validation]="isInvalid(nome)">
+      <input
+        type="text"
+        class="form-control"
+        id="nome"
+        name="nome"
+        placeholder="Nome"
+        [ngModel]="usuario.nome"
+        required
+        [class.is-invalid]="isInvalid(nome)"
+        #nome="ngModel"
+      />
+      <label for="nome">Nome</label>
+      <span class="invalid-feedback" *ngIf="isInvalid(nome)">
+        Nome é obrigatório
+      </span>
     </div>
   </div>
-  <div
-    class="form-floating mb-3"
-    [class.has-validation]="email.invalid && email.touched"
-  >
-    <input
-      type="email"
-      class="form-control"
-      id="email"
-      name="email"
-      placeholder="nome@email.com"
-      [ngModel]="usuario.email"
-      [class.is-invalid]="email.invalid && email.touched"
-      required
-      #email="ngModel"
-      email
-    />
-    <label for="email">Email</label>
-    <div class="invalid-feedback" *ngIf="email.invalid && email.touched">
-      Email inválido
+  <div class="mb-3 row g-3">
+    <div class="form-floating" [class.has-validation]="isInvalid(email)">
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        name="email"
+        placeholder="nome@email.com"
+        [ngModel]="usuario.email"
+        [class.is-invalid]="isInvalid(email)"
+        required
+        #email="ngModel"
+        email
+      />
+      <label for="email">Email</label>
+      <span class="invalid-feedback" *ngIf="isInvalid(email)">
+        Email inválido
+      </span>
+    </div>
+  </div>
+
+  <div ngModelGroup="endereco">
+    <div class="form-group mb-3 row g-3">
+      <div
+        class="col-md-3 form-floating"
+        [class.has-validation]="isInvalid(cep)"
+      >
+        <input
+          class="form-control"
+          type="text"
+          id="cep"
+          name="cep"
+          placeholder="00000-000"
+          ngModel
+          required
+          #cep="ngModel"
+          [class.is-invalid]="isInvalid(cep)"
+          (blur)="getAddressByCep(cep.value, f)"
+        />
+        <label for="cep">CEP</label>
+        <span class="invalid-feedback" *ngIf="isInvalid(cep)">
+          CEP inválido
+        </span>
+      </div>
+      <div
+        class="col-md-3 form-floating"
+        [class.has-validation]="isInvalid(numero)"
+      >
+        <input
+          class="form-control"
+          type="text"
+          id="numero"
+          name="numero"
+          placeholder="Número"
+          ngModel
+          required
+          #numero="ngModel"
+          [class.is-invalid]="isInvalid(numero)"
+        />
+        <label for="numero">Numero</label>
+        <span class="invalid-feedback" *ngIf="isInvalid(numero)">
+          Número é obrigatório
+        </span>
+      </div>
+      <div class="col-md-6 form-floating">
+        <input
+          class="form-control"
+          type="text"
+          id="complemento"
+          name="complemento"
+          placeholder="Complemento"
+          ngModel
+          #complemento="ngModel"
+        />
+        <label for="cep">Complemento</label>
+      </div>
+    </div>
+    <div class="form-group mb-3 row g-3">
+      <div
+        class="col-md-12 form-floating"
+        [class.has-validation]="isInvalid(rua)"
+      >
+        <input
+          class="form-control"
+          type="text"
+          id="rua"
+          name="rua"
+          placeholder="00000-000"
+          ngModel
+          required
+          #rua="ngModel"
+          [class.is-invalid]="isInvalid(rua)"
+        />
+        <label for="rua">Rua</label>
+        <span class="invalid-feedback" *ngIf="isInvalid(rua)">
+          Rua é obrigatória
+        </span>
+      </div>
+      <div
+        class="col-md-5 form-floating"
+        [class.has-validation]="isInvalid(bairro)"
+      >
+        <input
+          class="form-control"
+          type="text"
+          id="bairro"
+          name="bairro"
+          placeholder="00000-000"
+          ngModel
+          required
+          #bairro="ngModel"
+          [class.is-invalid]="isInvalid(bairro)"
+        />
+        <label for="bairro">Bairro</label>
+        <span class="invalid-feedback" *ngIf="isInvalid(bairro)">
+          Bairro é obrigatório
+        </span>
+      </div>
+      <div
+        class="col-md-4 form-floating"
+        [class.has-validation]="isInvalid(cidade)"
+      >
+        <input
+          class="form-control"
+          type="text"
+          id="cidade"
+          name="cidade"
+          placeholder="Número"
+          ngModel
+          required
+          #cidade="ngModel"
+          [class.is-invalid]="isInvalid(cidade)"
+        />
+        <label for="cidade">Cidade</label>
+        <span class="invalid-feedback" *ngIf="isInvalid(cidade)">
+          Cidade é obrigatória
+        </span>
+      </div>
+      <div
+        class="col-md-3 form-floating"
+        [class.has-validation]="isInvalid(estado)"
+      >
+        <input
+          class="form-control"
+          type="text"
+          id="estado"
+          name="estado"
+          placeholder="Número"
+          ngModel
+          required
+          #estado="ngModel"
+          [class.is-invalid]="isInvalid(estado)"
+        />
+        <label for="estado">Estado</label>
+        <span class="invalid-feedback" *ngIf="isInvalid(estado)">
+          Estado é obrigatório
+        </span>
+      </div>
     </div>
   </div>
   <button type="submit" class="btn btn-primary" [disabled]="f.invalid">
