@@ -7,7 +7,6 @@
         id="name"
         formControlName="name"
         placeholder="Nome"
-        required
         [class.is-invalid]="isInvalid('name')"
       />
       <label for="name">Nome</label>
@@ -25,13 +24,132 @@
         id="email"
         formControlName="email"
         placeholder="nome@email.com"
-        required
         [class.is-invalid]="isInvalid('email')"
       />
       <label for="email">Email</label>
       <span class="invalid-feedback" *ngIf="isInvalid('email')">
         Email inválido
       </span>
+    </div>
+  </div>
+
+  <div formGroupName="address">
+    <div class="form-group mb-3 row g-3">
+      <div
+        class="col-md-3 form-floating"
+        [class.has-validation]="isInvalid('address.cep')"
+      >
+        <input
+          class="form-control"
+          type="text"
+          id="cep"
+          formControlName="cep"
+          placeholder="00000-000"
+          [class.is-invalid]="isInvalid('address.cep')"
+          (blur)="getAddressByCep()"
+        />
+        <label for="cep">CEP</label>
+        <span class="invalid-feedback" *ngIf="isInvalid('address.cep')">
+          CEP inválido
+        </span>
+      </div>
+      <div
+        class="col-md-3 form-floating"
+        [class.has-validation]="isInvalid('address.number')"
+      >
+        <input
+          class="form-control"
+          type="text"
+          id="number"
+          formControlName="number"
+          placeholder="Número"
+          [class.is-invalid]="isInvalid('address.number')"
+        />
+        <label for="number">Numero</label>
+        <span class="invalid-feedback" *ngIf="isInvalid('address.number')">
+          Número é obrigatório
+        </span>
+      </div>
+      <div class="col-md-6 form-floating">
+        <input
+          class="form-control"
+          type="text"
+          id="complement"
+          formControlName="complement"
+          placeholder="Complemento"
+        />
+        <label for="complement">Complemento</label>
+      </div>
+    </div>
+    <div class="form-group mb-3 row g-3">
+      <div
+        class="col-md-12 form-floating"
+        [class.has-validation]="isInvalid('address.street')"
+      >
+        <input
+          class="form-control"
+          type="text"
+          id="street"
+          formControlName="street"
+          placeholder="00000-000"
+          [class.is-invalid]="isInvalid('address.street')"
+        />
+        <label for="street">Rua</label>
+        <span class="invalid-feedback" *ngIf="isInvalid('address.street')">
+          Rua é obrigatória
+        </span>
+      </div>
+      <div
+        class="col-md-5 form-floating"
+        [class.has-validation]="isInvalid('address.district')"
+      >
+        <input
+          class="form-control"
+          type="text"
+          id="district"
+          formControlName="district"
+          placeholder="00000-000"
+          [class.is-invalid]="isInvalid('address.district')"
+        />
+        <label for="district">Bairro</label>
+        <span class="invalid-feedback" *ngIf="isInvalid('address.district')">
+          Bairro é obrigatório
+        </span>
+      </div>
+      <div
+        class="col-md-4 form-floating"
+        [class.has-validation]="isInvalid('address.city')"
+      >
+        <input
+          class="form-control"
+          type="text"
+          id="city"
+          formControlName="city"
+          placeholder="Número"
+          [class.is-invalid]="isInvalid('address.city')"
+        />
+        <label for="city">Cidade</label>
+        <span class="invalid-feedback" *ngIf="isInvalid('address.city')">
+          Cidade é obrigatória
+        </span>
+      </div>
+      <div
+        class="col-md-3 form-floating"
+        [class.has-validation]="isInvalid('address.state')"
+      >
+        <input
+          class="form-control"
+          type="text"
+          id="state"
+          formControlName="state"
+          placeholder="Número"
+          [class.is-invalid]="isInvalid('address.state')"
+        />
+        <label for="state">Estado</label>
+        <span class="invalid-feedback" *ngIf="isInvalid('address.state')">
+          Estado é obrigatório
+        </span>
+      </div>
     </div>
   </div>
 
