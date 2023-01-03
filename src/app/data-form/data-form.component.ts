@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-data-form',
@@ -15,14 +20,18 @@ export class DataFormComponent implements OnInit {
     //   email: new FormControl(),
     // });
     this.form = this.formBuilder.group({
-      name: [],
-      email: [],
+      name: [null, Validators.required],
+      email: [null, [Validators.required, Validators.email]],
     });
   }
 
   ngOnInit(): void {}
 
+  isInvalid(input: string) {
+    return this.form.get(input)?.invalid && this.form.get(input)?.touched;
+  }
+
   onSubmit() {
-    console.log(this.form.value);
+    console.log(this.form);
   }
 }

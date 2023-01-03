@@ -1,6 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="mb-3 row g-3">
-    <div class="form-floating">
+    <div class="form-floating" [class.has-validation]="isInvalid('name')">
       <input
         type="text"
         class="form-control"
@@ -8,13 +8,17 @@
         formControlName="name"
         placeholder="Nome"
         required
+        [class.is-invalid]="isInvalid('name')"
       />
       <label for="name">Nome</label>
+      <span class="invalid-feedback" *ngIf="isInvalid('name')">
+        Nome é obrigatório
+      </span>
     </div>
   </div>
 
   <div class="mb-3 row g-3">
-    <div class="form-floating">
+    <div class="form-floating" [class.has-validation]="isInvalid('email')">
       <input
         type="email"
         class="form-control"
@@ -22,10 +26,14 @@
         formControlName="email"
         placeholder="nome@email.com"
         required
+        [class.is-invalid]="isInvalid('email')"
       />
       <label for="email">Email</label>
+      <span class="invalid-feedback" *ngIf="isInvalid('email')">
+        Email inválido
+      </span>
     </div>
   </div>
 
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary">Enviar</button>
 </form>
