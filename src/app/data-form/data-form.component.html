@@ -137,14 +137,16 @@
         class="col-md-3 form-floating"
         [class.has-validation]="isInvalid('address.state')"
       >
-        <input
-          class="form-control"
-          type="text"
+        <select
+          class="form-select"
           id="state"
           formControlName="state"
-          placeholder="Número"
           [class.is-invalid]="isInvalid('address.state')"
-        />
+        >
+          <option *ngFor="let state of states | async" [ngValue]="state.sigla">
+            {{ state.nome }}
+          </option>
+        </select>
         <label for="state">Estado</label>
         <span class="invalid-feedback" *ngIf="isInvalid('address.state')">
           Estado é obrigatório

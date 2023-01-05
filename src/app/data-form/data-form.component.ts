@@ -1,12 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { map } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { map, Observable } from 'rxjs';
+import { BRState } from '../shared/models/brstate';
+import { DropdownService } from '../shared/services/dropdown.service';
 
 @Component({
   selector: 'app-data-form',
@@ -15,12 +12,13 @@ import { map } from 'rxjs';
 })
 export class DataFormComponent implements OnInit {
   form: FormGroup;
+  states: Observable<BRState[]>;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
-    // this.form = new FormGroup({
-    //   name: new FormControl(),
-    //   email: new FormControl(),
-    // });
+  constructor(
+    private formBuilder: FormBuilder,
+    private http: HttpClient,
+    private dropdownService: DropdownService
+  ) {
     this.form = this.formBuilder.group({
       name: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
@@ -34,6 +32,8 @@ export class DataFormComponent implements OnInit {
         state: [null, Validators.required],
       }),
     });
+
+    this.states = this.dropdownService.getBrazilStates();
   }
 
   ngOnInit(): void {}
@@ -49,6 +49,8 @@ export class DataFormComponent implements OnInit {
         control?.markAllAsTouched();
       });
     }
+
+    console.log(this.form.value);
   }
 
   getAddressByCep() {
